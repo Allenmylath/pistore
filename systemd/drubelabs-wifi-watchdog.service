@@ -1,0 +1,13 @@
+[Unit]
+Description=Watchdog that keeps wlan0 connected to the drubelabs WiFi network
+After=NetworkManager.service
+Wants=NetworkManager.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/drubelabs-wifi-watchdog.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

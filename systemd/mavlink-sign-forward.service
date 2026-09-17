@@ -1,0 +1,14 @@
+[Unit]
+Description=Sign Pixhawk MAVLink and forward it to the mavlink-hub
+After=mavlink-forward.service
+Wants=mavlink-forward.service
+
+[Service]
+Type=simple
+User=shis
+ExecStart=/usr/local/bin/mavlink-sign-forward.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

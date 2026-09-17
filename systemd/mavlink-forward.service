@@ -1,0 +1,15 @@
+[Unit]
+Description=Forward Pixhawk MAVLink telemetry to remote UDP endpoint
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=shis
+ExecStart=/usr/local/bin/mavlink-forward.sh
+Restart=always
+RestartSec=5
+SupplementaryGroups=dialout
+
+[Install]
+WantedBy=multi-user.target
