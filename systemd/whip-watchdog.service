@@ -1,0 +1,14 @@
+[Unit]
+Description=Watchdog for WHIP camera stream - restarts publisher if Cloudflare session goes silent
+After=whip-camera-stream.service
+Wants=whip-camera-stream.service
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/whip-stream.env
+ExecStart=/usr/local/bin/whip-watchdog.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

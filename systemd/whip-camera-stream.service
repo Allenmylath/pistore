@@ -1,0 +1,16 @@
+[Unit]
+Description=Push Raspberry Pi camera stream to WHIP endpoint
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=shis
+EnvironmentFile=/etc/whip-stream.env
+ExecStart=/usr/local/bin/whip-stream.sh
+Restart=always
+RestartSec=5
+SupplementaryGroups=video
+
+[Install]
+WantedBy=multi-user.target

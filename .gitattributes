@@ -1,0 +1,2 @@
+# These run on the Pi: CRLF from a Windows checkout breaks bash ("$'\r': command not found").
+* text=auto eol=lf
