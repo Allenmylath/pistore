@@ -38,11 +38,10 @@ sudo raspi-config nonint do_serial_cons 0   # serial login console, as on the or
 
 ## 3. WiFi profiles
 
-`drubelabs-wifi-watchdog` brings up a NetworkManager connection named exactly `drubelabs`. The Imager's profile is usually called `preconfigured`, so rename it (or add one):
+`drubelabs-wifi-watchdog` finds the NetworkManager profile for SSID `drubelabs` by its SSID, so the Imager's profile works as is, whatever it's called (`netplan-wlan0-drubelabs` on trixie, `preconfigured` on bookworm). Don't rename it over SSH: it's the connection you're on. Add the hotspot profile:
 
 ```bash
-nmcli -t -f NAME connection show
-sudo nmcli connection modify preconfigured connection.id drubelabs     # if the Imager created it
+nmcli -t -f NAME,TYPE connection show                                  # expect a wireless profile for drubelabs
 sudo nmcli connection add type wifi ifname wlan0 con-name shis-hotspot ssid shis \
      wifi-sec.key-mgmt wpa-psk wifi-sec.psk '<hotspot password>'
 ```
@@ -76,7 +75,7 @@ Check it:
 Built from git (`v4-16-g2362c62`) into `/usr/bin`, where `mavlink-forward.sh` expects it:
 
 ```bash
-sudo apt install -y meson ninja-build
+sudo apt install -y build-essential pkg-config meson ninja-build systemd-dev   # systemd-dev: meson fails with 'Dependency "systemd" not found' without it
 cd ~ && git clone https://github.com/mavlink-router/mavlink-router.git && cd mavlink-router
 git checkout 2362c62 && git submodule update --init --recursive
 meson setup build . --prefix=/usr --buildtype=release
